@@ -3,7 +3,9 @@ import Head from 'next/head'
 import DepthChart from '../components/DepthChart'
 import PieGraph from '../components/PieGraph'
 import AssetLineChart from '../components/assetLineChart'
-import PriceChart from '../components/lineMotion'
+import HeatChart from '../components/heatChart'
+import HeatMap from '../components/heatMap'
+
 export const Home = (): JSX.Element => {
   const graphRef = useRef()
   const [graphWidth, setGraphWidth] = useState()
@@ -42,7 +44,12 @@ export const Home = (): JSX.Element => {
             <h5 className="stat-green ">+ 23.2312%</h5>
           </div>
         </div>
-        <PriceChart
+        {/* <HeatMap
+          width={graphWidth > 800 ? 800 : graphWidth}
+          height={400}
+          margin={{ top: 10, right: 30, bottom: 22, left: 30 }}
+        /> */}
+        <HeatChart
           width={graphWidth > 800 ? 800 : graphWidth}
           height={400}
           margin={{ top: 10, right: 30, bottom: 22, left: 30 }}

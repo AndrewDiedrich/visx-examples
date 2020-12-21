@@ -1,6 +1,7 @@
 import React, { useMemo, useCallback } from 'react'
 import { AreaClosed, Line, Bar } from '@visx/shape'
 import appleStock, { AppleStock } from '@visx/mock-data/lib/mocks/appleStock'
+import { AxisBottom, AxisLeft } from '@visx/axis'
 import { curveMonotoneX } from '@visx/curve'
 import { GridRows, GridColumns } from '@visx/grid'
 import { scaleTime, scaleLinear } from '@visx/scale'
@@ -18,7 +19,7 @@ import { timeFormat } from 'd3-time-format'
 
 type TooltipData = AppleStock
 
-const stock = appleStock.slice(800)
+const stock = appleStock.slice(200)
 export const background = 'transparent'
 export const background2 = 'transparent'
 export const accentColor = '#a4ffa7'
@@ -29,6 +30,88 @@ const tooltipStyles = {
   border: '1px solid white',
   color: 'white',
 }
+
+export interface DepthChart {
+  total: number
+  price: number
+}
+// type TooltipData = DepthChart
+
+// const newData = {
+//   ask: 0.072,
+//   bid: 0.07,
+//   asks: [
+//     { date: '2020-01-01', price: 0.13 },
+//     { date: '2020-01-02', price: 0.14 },
+//     { date: '2020-01-03', price: 0.15 },
+//     { date: '2020-01-04', price: 0.16 },
+//     { date: '2020-01-05', price: 0.17 },
+//     { date: '2020-01-06', price: 0.18 },
+//     { date: '2020-01-07', price: 0.19 },
+//     { date: '2020-01-08', price: 0.2 },
+//     { date: '2020-01-09', price: 0.21 },
+//     { date: '2020-01-10', price: 0.22 },
+//     { date: '2020-01-11', price: 0.02 },
+//     { date: '2020-01-12', price: 0.03 },
+//     { date: '2020-01-13', price: 0.04 },
+//     { date: '2020-01-14', price: 0.05 },
+//     { date: '2020-01-15', price: 0.06 },
+//     { date: '2020-01-16', price: 0.07 },
+//     { date: '2020-01-17', price: 0.08 },
+//     { date: '2020-01-18', price: 0.09 },
+//     { date: '2020-01-19', price: 0.1 },
+//     { date: '2020-01-20', price: 0.12 },
+//   ],
+// }
+
+// const bookData = {
+//   ask: 0.072,
+//   bid: 0.07,
+//   asks: [
+//     { date: '2020-01-01', price: 0.23 },
+//     { date: '2020-01-02', price: 0.24 },
+//     { date: '2020-01-03', price: 0.25 },
+//     { date: '2020-01-04', price: 0.26 },
+//     { date: '2020-01-05', price: 0.27 },
+//     { date: '2020-01-06', price: 0.28 },
+//     { date: '2020-01-07', price: 0.29 },
+//     { date: '2020-01-08', price: 0.22 },
+//     { date: '2020-01-09', price: 0.21 },
+//     { date: '2020-01-10', price: 0.22 },
+//     { date: '2020-01-11', price: 0.22 },
+//     { date: '2020-01-12', price: 0.23 },
+//     { date: '2020-01-13', price: 0.24 },
+//     { date: '2020-01-14', price: 0.25 },
+//     { date: '2020-01-15', price: 0.26 },
+//     { date: '2020-01-16', price: 0.27 },
+//     { date: '2020-01-17', price: 0.28 },
+//     { date: '2020-01-18', price: 0.29 },
+//     { date: '2020-01-19', price: 0.22 },
+//     { date: '2020-01-20', price: 0.22 },
+//   ],
+//   bids: [
+//     { date: '2020-01-01', price: 0.03 },
+//     { date: '2020-01-02', price: 0.04 },
+//     { date: '2020-01-03', price: 0.05 },
+//     { date: '2020-01-04', price: 0.06 },
+//     { date: '2020-01-05', price: 0.07 },
+//     { date: '2020-01-06', price: 0.08 },
+//     { date: '2020-01-07', price: 0.09 },
+//     { date: '2020-01-08', price: 0.01 },
+//     { date: '2020-01-09', price: 0.01 },
+//     { date: '2020-01-10', price: 0.02 },
+//     { date: '2020-01-11', price: 0.02 },
+//     { date: '2020-01-12', price: 0.03 },
+//     { date: '2020-01-13', price: 0.04 },
+//     { date: '2020-01-14', price: 0.05 },
+//     { date: '2020-01-15', price: 0.06 },
+//     { date: '2020-01-16', price: 0.07 },
+//     { date: '2020-01-17', price: 0.08 },
+//     { date: '2020-01-18', price: 0.09 },
+//     { date: '2020-01-19', price: 0.03 },
+//     { date: '2020-01-20', price: 0.02 },
+//   ],
+// }
 
 // util
 const formatDate = timeFormat("%b %d, '%y")
@@ -158,6 +241,32 @@ export default withTooltip<AreaProps, TooltipData>(
             stroke="url(#area-gradient)"
             fill="url(#area-gradient)"
             curve={curveMonotoneX}
+          />
+          <AxisLeft
+            hideAxisLine={false}
+            hideTicks={false}
+            scale={stockValueScale}
+            left={margin.left}
+            //   tickFormat={formatDate}
+            stroke={accentColorDark}
+            tickStroke={accentColorDark}
+            tickLabelProps={() => ({
+              fill: accentColorDark,
+              fontSize: 11,
+              textAnchor: 'end',
+              dy: '0.33em',
+            })}
+          />
+          <AxisBottom
+            top={innerHeight}
+            scale={dateScale}
+            stroke={accentColorDark}
+            tickStroke={accentColorDark}
+            tickLabelProps={() => ({
+              fill: accentColorDark,
+              fontSize: 11,
+              textAnchor: 'middle',
+            })}
           />
           <Bar
             x={margin.left}
