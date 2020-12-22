@@ -35,14 +35,26 @@ export const Home = (): JSX.Element => {
         </h5>
         <div className="grid">
           <div className="card">
-            <h5 className="stat-green ">+ 23.2312%</h5>
+            <h3>Liquidity</h3>
+            <h4 className="stat-green ">+ 23.2312%</h4>
           </div>
           <div className="card">
-            <h5 className="stat-green ">+ 23.2312%</h5>
+            <h3>Borrowed</h3>
+            <h4 className="stat-green ">+ 23.2312%</h4>
           </div>
           <div className="card">
-            <h5 className="stat-green ">+ 23.2312%</h5>
+            <h3>CCHEX Price</h3>
+            <h4 className="stat-green ">+ 23.2312%</h4>
           </div>
+        </div>
+        <div className="grid">
+          <button
+            style={{ marginRight: '20px' }}
+            className="chintai-button green"
+          >
+            Lend
+          </button>
+          <button className="chintai-button red">Unlend</button>
         </div>
         {/* <HeatMap
           width={graphWidth > 800 ? 800 : graphWidth}
@@ -83,12 +95,47 @@ export const Home = (): JSX.Element => {
 
       <style jsx>{`
         h2 {
-          margin: 5px;
+          margin: 3px;
           color: white;
         }
         h5 {
-          margin: 5px;
+          margin: 3px;
           color: white;
+        }
+
+        h3 {
+          // font-weight: thin;
+        }
+
+        .chintai-button {
+          padding: 5px;
+          font-size: 1.2rem;
+          color: #08253a;
+          background: #f0f0f0;
+          border: none;
+          box-shadow: 0px 0px 0px rgba(16, 22, 26, 0.1),
+            0px 1px 1px rgba(16, 22, 26, 0.2), 0px 2px 6px rgba(16, 22, 26, 0.2);
+
+          min-width: 200px;
+          transition: color 2.75s ease, border-color 2.75s ease;
+        }
+
+        .chintai-button:hover,
+        .chintai-button:focus,
+        .chintai-button:active {
+          grow: 1.3;
+          // color: #0070f3;
+          // border: 1px solid;
+          // border-color: #0070f3;
+          cursor: pointer;
+        }
+
+        .red {
+          background: #fee2e2;
+        }
+
+        .green {
+          background: #e4fee5;
         }
 
         .stat-green {
@@ -200,14 +247,16 @@ export const Home = (): JSX.Element => {
 
         .card {
           margin: 1rem;
+          width: 185px;
           flex-basis: 45%;
-          padding: 1.5rem;
+          padding: 1rem;
           text-align: left;
-          color: inherit;
+          color: white;
           text-decoration: none;
-
           background: rgba(8, 37, 58, 0.4);
-          border-radius: 10px;
+          box-shadow: 0px 0px 0px rgba(16, 22, 26, 0.1),
+            0px 1px 1px rgba(16, 22, 26, 0.2), 0px 2px 6px rgba(16, 22, 26, 0.2);
+          border-radius: 5px;
           transition: color 0.15s ease, border-color 0.15s ease;
         }
 
@@ -215,7 +264,8 @@ export const Home = (): JSX.Element => {
         .card:focus,
         .card:active {
           color: #0070f3;
-          border-color: #0070f3;
+          // border: 1px solid;
+          // border-color: #0070f3;
         }
 
         .card h3 {
