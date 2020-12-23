@@ -10,7 +10,7 @@ const cool1 = '#122549'
 const cool2 = '#b4fbde'
 export const background = '#28272c'
 
-const binData = genBins(/* length = */ 16, /* height = */ 16)
+const binData = genBins(/* length = */ 72, /* height = */ 72)
 
 function max<Datum>(data: Datum[], value: (d: Datum) => number): number {
   return Math.max(...data.map(value))
@@ -97,7 +97,7 @@ const Example = ({
           colorScale={circleColorScale}
           opacityScale={opacityScale}
           radius={radius}
-          gap={2}
+          gap={0}
         >
           {(heatmap) =>
             heatmap.map((heatmapBins) =>
@@ -130,7 +130,7 @@ const Example = ({
           opacityScale={opacityScale}
           binWidth={binWidth}
           binHeight={binWidth}
-          gap={2}
+          gap={0}
         >
           {(heatmap) =>
             heatmap.map((heatmapBins) =>

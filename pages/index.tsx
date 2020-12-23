@@ -56,11 +56,11 @@ export const Home = (): JSX.Element => {
           </button>
           <button className="chintai-button red">Unlend</button>
         </div>
-        {/* <HeatMap
+        <HeatMap
           width={graphWidth > 800 ? 800 : graphWidth}
           height={400}
           margin={{ top: 10, right: 30, bottom: 22, left: 30 }}
-        /> */}
+        />
         <HeatChart
           width={graphWidth > 800 ? 800 : graphWidth}
           height={400}

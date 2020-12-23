@@ -17,7 +17,7 @@ import {
 import { WithTooltipProvidedProps } from '@visx/tooltip/lib/enhancers/withTooltip'
 import { localPoint } from '@visx/event'
 import { LinearGradient } from '@visx/gradient'
-import { max, extent, bisector } from 'd3-array'
+import { extent, bisector } from 'd3-array'
 import { timeFormat } from 'd3-time-format'
 
 // type TooltipData = AppleStock
@@ -33,48 +33,48 @@ const tooltipStyles = {
   color: 'white',
 }
 
-// const hot1 = '#77312f'
-// const hot2 = '#f33d15'
+const hot1 = '#77312f'
+const hot2 = '#f33d15'
 const cool1 = '#122549'
 const cool2 = '#b4fbde'
 // export const background = '#28272c'
 
-// const binData = genBins(/* length = */ 16, /* height = */ 16)
+const binData = genBins(/* length = */ 16, /* height = */ 16)
 
-// function max<Datum>(data: Datum[], value: (d: Datum) => number): number {
-//   return Math.max(...data.map(value))
-// }
+function max<Datum>(data: Datum[], value: (d: Datum) => number): number {
+  return Math.max(...data.map(value))
+}
 
-// function min<Datum>(data: Datum[], value: (d: Datum) => number): number {
-//   return Math.min(...data.map(value))
-// }
+function min<Datum>(data: Datum[], value: (d: Datum) => number): number {
+  return Math.min(...data.map(value))
+}
 
 // accessors
-// const bins = (d: BookData) => d.asks.date
-// const count = (d: BookData) => d.asks.price
+const bins = (d: Bins) => d.bins
+const count = (d: Bin) => d.count
 
-// const colorMax = max(binData, (d) => max(bins(d), count))
-// const bucketSizeMax = max(binData, (d) => bins(d).length)
+const colorMax = max(binData, (d) => max(bins(d), count))
+const bucketSizeMax = max(binData, (d) => bins(d).length)
 
-// // scales
-// const xScale = scaleLinear<number>({
-//   domain: [0, binData.length],
-// })
-// const yScale = scaleLinear<number>({
-//   domain: [0, bucketSizeMax],
-// })
-// const circleColorScale = scaleLinear<string>({
-//   range: [hot1, hot2],
-//   domain: [0, colorMax],
-// })
-// const rectColorScale = scaleLinear<string>({
-//   range: [cool1, cool2],
-//   domain: [0, colorMax],
-// })
-// const opacityScale = scaleLinear<number>({
-//   range: [0.1, 1],
-//   domain: [0, colorMax],
-// })
+// scales
+const xScale = scaleLinear<number>({
+  domain: [0, binData.length],
+})
+const yScale = scaleLinear<number>({
+  domain: [0, bucketSizeMax],
+})
+const circleColorScale = scaleLinear<string>({
+  range: [hot1, hot2],
+  domain: [0, colorMax],
+})
+const rectColorScale = scaleLinear<string>({
+  range: [cool1, cool2],
+  domain: [0, colorMax],
+})
+const opacityScale = scaleLinear<number>({
+  range: [0.1, 1],
+  domain: [0, colorMax],
+})
 
 export interface PriceChart {
   date: string
@@ -87,8 +87,8 @@ const data = [
   { date: '2020-01-02', price: 20.14 },
   { date: '2020-01-03', price: 22.15 },
   { date: '2020-01-04', price: 24.16 },
-  { date: '2020-01-05', price: 25.17 },
-  { date: '2020-01-06', price: 26.18 },
+  { date: '2020-01-05', price: 55.17 },
+  { date: '2020-01-06', price: 66.18 },
   { date: '2020-01-07', price: 26.19 },
   { date: '2020-01-08', price: 26.7 },
   { date: '2020-01-09', price: 27.21 },
@@ -110,58 +110,58 @@ export interface BookRow {
   price: number
 }
 
-// export interface IBookData {
-//   asks: BookRow[]
-//   bids: BookRow[]
-// }
-// type BookData = IBookData
+export interface IBookData {
+  asks: BookRow[]
+  bids: BookRow[]
+}
+type BookData = IBookData
 
-// const bookData = {
-//   asks: [
-//     { date: '2020-01-01', price: 70.13 },
-//     { date: '2020-01-02', price: 30.14 },
-//     { date: '2020-01-03', price: 95.15 },
-//     { date: '2020-01-04', price: 99.16 },
-//     { date: '2020-01-05', price: 98.17 },
-//     { date: '2020-01-06', price: 99.18 },
-//     { date: '2020-01-07', price: 101.19 },
-//     { date: '2020-01-08', price: 120.2 },
-//     { date: '2020-01-09', price: 100.21 },
-//     { date: '2020-01-10', price: 86.22 },
-//     { date: '2020-01-11', price: 88.02 },
-//     { date: '2020-01-12', price: 89.03 },
-//     { date: '2020-01-13', price: 99.04 },
-//     { date: '2020-01-14', price: 119.05 },
-//     { date: '2020-01-15', price: 129.06 },
-//     { date: '2020-01-16', price: 140.07 },
-//     { date: '2020-01-17', price: 145.08 },
-//     { date: '2020-01-18', price: 147.09 },
-//     { date: '2020-01-19', price: 150.1 },
-//     { date: '2020-01-20', price: 151.12 },
-//   ],
-//   bids: [
-//     { date: '2020-01-01', price: 50.13 },
-//     { date: '2020-01-02', price: 10.14 },
-//     { date: '2020-01-03', price: 80.15 },
-//     { date: '2020-01-04', price: 85.16 },
-//     { date: '2020-01-05', price: 81.17 },
-//     { date: '2020-01-06', price: 85.18 },
-//     { date: '2020-01-07', price: 76.19 },
-//     { date: '2020-01-08', price: 100.2 },
-//     { date: '2020-01-09', price: 60.21 },
-//     { date: '2020-01-10', price: 70.22 },
-//     { date: '2020-01-11', price: 63.02 },
-//     { date: '2020-01-12', price: 75.03 },
-//     { date: '2020-01-13', price: 80.04 },
-//     { date: '2020-01-14', price: 100.05 },
-//     { date: '2020-01-15', price: 120.06 },
-//     { date: '2020-01-16', price: 125.07 },
-//     { date: '2020-01-17', price: 125.08 },
-//     { date: '2020-01-18', price: 117.09 },
-//     { date: '2020-01-19', price: 120.1 },
-//     { date: '2020-01-20', price: 131.12 },
-//   ],
-// }
+const bookData = {
+  asks: [
+    { date: '2020-01-01', price: 70.13 },
+    { date: '2020-01-02', price: 30.14 },
+    { date: '2020-01-03', price: 95.15 },
+    { date: '2020-01-04', price: 99.16 },
+    { date: '2020-01-05', price: 98.17 },
+    { date: '2020-01-06', price: 99.18 },
+    { date: '2020-01-07', price: 101.19 },
+    { date: '2020-01-08', price: 120.2 },
+    { date: '2020-01-09', price: 100.21 },
+    { date: '2020-01-10', price: 86.22 },
+    { date: '2020-01-11', price: 88.02 },
+    { date: '2020-01-12', price: 89.03 },
+    { date: '2020-01-13', price: 99.04 },
+    { date: '2020-01-14', price: 119.05 },
+    { date: '2020-01-15', price: 129.06 },
+    { date: '2020-01-16', price: 140.07 },
+    { date: '2020-01-17', price: 145.08 },
+    { date: '2020-01-18', price: 147.09 },
+    { date: '2020-01-19', price: 150.1 },
+    { date: '2020-01-20', price: 151.12 },
+  ],
+  bids: [
+    { date: '2020-01-01', price: 50.13 },
+    { date: '2020-01-02', price: 10.14 },
+    { date: '2020-01-03', price: 80.15 },
+    { date: '2020-01-04', price: 85.16 },
+    { date: '2020-01-05', price: 81.17 },
+    { date: '2020-01-06', price: 85.18 },
+    { date: '2020-01-07', price: 76.19 },
+    { date: '2020-01-08', price: 100.2 },
+    { date: '2020-01-09', price: 60.21 },
+    { date: '2020-01-10', price: 70.22 },
+    { date: '2020-01-11', price: 63.02 },
+    { date: '2020-01-12', price: 75.03 },
+    { date: '2020-01-13', price: 80.04 },
+    { date: '2020-01-14', price: 100.05 },
+    { date: '2020-01-15', price: 120.06 },
+    { date: '2020-01-16', price: 125.07 },
+    { date: '2020-01-17', price: 125.08 },
+    { date: '2020-01-18', price: 117.09 },
+    { date: '2020-01-19', price: 120.1 },
+    { date: '2020-01-20', price: 131.12 },
+  ],
+}
 
 const stock = data
 
@@ -179,6 +179,14 @@ export type AreaProps = {
   margin?: { top: number; right: number; bottom: number; left: number }
 }
 
+export type HeatmapProps = {
+  width: number
+  height: number
+  margin?: { top: number; right: number; bottom: number; left: number }
+  separation?: number
+  events?: boolean
+}
+
 export default withTooltip<AreaProps, TooltipData>(
   ({
     width,
@@ -189,12 +197,26 @@ export default withTooltip<AreaProps, TooltipData>(
     tooltipData,
     tooltipTop = 0,
     tooltipLeft = 0,
-  }: AreaProps & WithTooltipProvidedProps<TooltipData>) => {
+    events = false,
+    separation = 20,
+  }: AreaProps & HeatmapProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null
 
     // bounds
     const innerWidth = width - margin.left - margin.right
     const innerHeight = height - margin.top - margin.bottom
+
+    // bounds
+    const size =
+      width > margin.left + margin.right
+        ? width - margin.left - margin.right - separation
+        : width
+    const xMax = size / 2
+    const yMax = height - margin.bottom - margin.top
+
+    const binWidth = xMax / binData.length
+    const binHeight = yMax / bucketSizeMax
+    const radius = min([binWidth, binHeight], (d) => d) / 2
 
     // scales
     const dateScale = useMemo(
@@ -294,15 +316,23 @@ export default withTooltip<AreaProps, TooltipData>(
             fill="url(#area-gradient)"
             curve={curveMonotoneX}
           />
-          {/* <Group top={margin.top} left={margin.left}>
+          <svg width={width} height={height}>
+            <rect
+              x={0}
+              y={0}
+              width={width}
+              height={height}
+              rx={14}
+              fill={background}
+            />
             <HeatmapRect
-              data={bookData.ask}
-              xScale={dateScale}
-              yScale={stockValueScale}
+              data={binData}
+              xScale={(d) => xScale(d) ?? 0}
+              yScale={(d) => yScale(d) ?? 0}
               colorScale={rectColorScale}
               opacityScale={opacityScale}
-              binWidth={10}
-              binHeight={10}
+              binWidth={binWidth}
+              binHeight={binHeight}
               gap={2}
             >
               {(heatmap) =>
@@ -327,7 +357,7 @@ export default withTooltip<AreaProps, TooltipData>(
                 )
               }
             </HeatmapRect>
-          </Group> */}
+          </svg>
           <AxisLeft
             hideAxisLine={false}
             hideTicks={false}
@@ -399,6 +429,7 @@ export default withTooltip<AreaProps, TooltipData>(
             </g>
           )}
         </svg>
+
         {tooltipData && (
           <div>
             <TooltipWithBounds
