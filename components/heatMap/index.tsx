@@ -10,7 +10,46 @@ const cool1 = '#122549'
 const cool2 = '#b4fbde'
 export const background = '#28272c'
 
-const binData = genBins(/* length = */ 72, /* height = */ 72)
+// const binData = genBins(/* length = */ 72, /* height = */ 72)
+
+const binData = [
+  {
+    bin: 0,
+    bins: [
+      { bin: 70.5, count: 300 },
+      { bin: 71.5, count: 750 },
+      { bin: 71.5, count: 750 },
+      { bin: 71.5, count: 750 },
+    ],
+  },
+  {
+    bin: 1,
+    bins: [
+      { bin: 30.5, count: 400 },
+      { bin: 31.5, count: 700 },
+      { bin: 30.5, count: 400 },
+      { bin: 30.5, count: 400 },
+    ],
+  },
+  {
+    bin: 2,
+    bins: [
+      { bin: 95.5, count: 150 },
+      { bin: 96.5, count: 800 },
+      { bin: 95.5, count: 150 },
+      { bin: 95.5, count: 150 },
+    ],
+  },
+  {
+    bin: 3,
+    bins: [
+      { bin: 99.4, count: 400 },
+      { bin: 99.5, count: 350 },
+      { bin: 99.4, count: 400 },
+      { bin: 99.5, count: 350 },
+    ],
+  },
+]
 
 function max<Datum>(data: Datum[], value: (d: Datum) => number): number {
   return Math.max(...data.map(value))
@@ -62,14 +101,14 @@ const Example = ({
   height,
   events = false,
   margin = defaultMargin,
-  separation = 20,
+  separation = 10,
 }: HeatmapProps) => {
   // bounds
   const size =
     width > margin.left + margin.right
       ? width - margin.left - margin.right - separation
       : width
-  const xMax = size / 2
+  const xMax = size / 8
   const yMax = height - margin.bottom - margin.top
 
   const binWidth = xMax / binData.length
