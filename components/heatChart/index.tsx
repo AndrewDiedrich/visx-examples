@@ -41,6 +41,11 @@ const binData = [
       { bin: 71.5, count: 750 },
       { bin: 95.5, count: 150 },
       { bin: 95.5, count: 150 },
+      { bin: 99.4, count: 400 },
+      { bin: 30.5, count: 400 },
+      { bin: 95.5, count: 150 },
+      { bin: 95.5, count: 150 },
+      { bin: 99.4, count: 400 },
     ],
   },
   {
@@ -52,6 +57,11 @@ const binData = [
       { bin: 30.5, count: 400 },
       { bin: 95.5, count: 150 },
       { bin: 95.5, count: 150 },
+      { bin: 99.4, count: 400 },
+      { bin: 30.5, count: 400 },
+      { bin: 95.5, count: 150 },
+      { bin: 95.5, count: 150 },
+      { bin: 99.4, count: 400 },
     ],
   },
   {
@@ -60,9 +70,14 @@ const binData = [
       { bin: 95.5, count: 150 },
       { bin: 96.5, count: 800 },
       { bin: 95.5, count: 150 },
+      { bin: 99.4, count: 400 },
       { bin: 95.5, count: 150 },
       { bin: 95.5, count: 150 },
       { bin: 95.5, count: 150 },
+      { bin: 30.5, count: 400 },
+      { bin: 95.5, count: 150 },
+      { bin: 95.5, count: 150 },
+      { bin: 99.4, count: 400 },
     ],
   },
   {
@@ -70,6 +85,11 @@ const binData = [
     bins: [
       { bin: 99.4, count: 400 },
       { bin: 99.5, count: 350 },
+      { bin: 99.4, count: 400 },
+      { bin: 30.5, count: 400 },
+      { bin: 95.5, count: 150 },
+      { bin: 95.5, count: 150 },
+      { bin: 99.4, count: 400 },
       { bin: 99.4, count: 400 },
       { bin: 71.5, count: 750 },
       { bin: 71.5, count: 750 },
@@ -82,6 +102,10 @@ const binData = [
       { bin: 99.4, count: 400 },
       { bin: 99.5, count: 350 },
       { bin: 99.4, count: 400 },
+      { bin: 30.5, count: 400 },
+      { bin: 95.5, count: 150 },
+      { bin: 95.5, count: 150 },
+      { bin: 99.4, count: 400 },
       { bin: 71.5, count: 750 },
       { bin: 71.5, count: 750 },
       { bin: 95.5, count: 150 },
@@ -92,6 +116,75 @@ const binData = [
     bins: [
       { bin: 99.4, count: 400 },
       { bin: 99.5, count: 350 },
+      { bin: 99.4, count: 400 },
+      { bin: 30.5, count: 400 },
+      { bin: 95.5, count: 150 },
+      { bin: 95.5, count: 150 },
+      { bin: 99.4, count: 400 },
+      { bin: 71.5, count: 750 },
+      { bin: 71.5, count: 750 },
+      { bin: 95.5, count: 150 },
+      { bin: 99.4, count: 400 },
+    ],
+  },
+  {
+    bin: 6,
+    bins: [
+      { bin: 99.4, count: 400 },
+      { bin: 99.5, count: 350 },
+      { bin: 99.4, count: 400 },
+      { bin: 30.5, count: 400 },
+      { bin: 95.5, count: 150 },
+      { bin: 95.5, count: 150 },
+      { bin: 99.4, count: 400 },
+      { bin: 99.4, count: 400 },
+      { bin: 71.5, count: 750 },
+      { bin: 71.5, count: 750 },
+      { bin: 95.5, count: 150 },
+    ],
+  },
+  {
+    bin: 7,
+    bins: [
+      { bin: 99.4, count: 400 },
+      { bin: 99.5, count: 350 },
+      { bin: 99.4, count: 400 },
+      { bin: 30.5, count: 400 },
+      { bin: 95.5, count: 150 },
+      { bin: 95.5, count: 150 },
+      { bin: 99.4, count: 400 },
+      { bin: 99.4, count: 400 },
+      { bin: 71.5, count: 750 },
+      { bin: 71.5, count: 750 },
+      { bin: 95.5, count: 150 },
+    ],
+  },
+  {
+    bin: 8,
+    bins: [
+      { bin: 99.4, count: 400 },
+      { bin: 99.5, count: 350 },
+      { bin: 99.4, count: 400 },
+      { bin: 30.5, count: 400 },
+      { bin: 95.5, count: 150 },
+      { bin: 95.5, count: 150 },
+      { bin: 99.4, count: 400 },
+      { bin: 99.4, count: 400 },
+      { bin: 71.5, count: 750 },
+      { bin: 71.5, count: 750 },
+      { bin: 95.5, count: 150 },
+    ],
+  },
+  {
+    bin: 9,
+    bins: [
+      { bin: 99.4, count: 400 },
+      { bin: 99.5, count: 350 },
+      { bin: 99.4, count: 400 },
+      { bin: 30.5, count: 400 },
+      { bin: 95.5, count: 150 },
+      { bin: 95.5, count: 150 },
+      { bin: 99.4, count: 400 },
       { bin: 99.4, count: 400 },
       { bin: 71.5, count: 750 },
       { bin: 71.5, count: 750 },
@@ -310,11 +403,11 @@ export default withTooltip<AreaProps, TooltipData>(
               opacityScale={opacityScale}
               binWidth={binWidth}
               binHeight={binHeight}
-              gap={2}
+              gap={1}
             >
               {(heatmap) =>
                 heatmap.map((heatmapBins) => {
-                  console.log(heatmapBins)
+                  // console.log(heatmapBins)
                   return heatmapBins.map((bin) => (
                     <rect
                       key={`heatmap-rect-${bin.row}-${bin.column}`}
